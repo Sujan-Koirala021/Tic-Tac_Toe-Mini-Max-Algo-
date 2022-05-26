@@ -9,20 +9,30 @@ buttonList = []
 root.resizable(False, False)
 
 def buttonClick(buttonVal):
+    # Disable button after click
+    buttonList[buttonVal-1].config(state = DISABLED)
+    
     global state
     state += 1
+    
+    # Check for alternate X and O
     if (state % 2 == 0):
         buttonList[buttonVal-1].config(text = "O")
     else:
         buttonList[buttonVal-1].config(text = "X")
         
-    print(state)
-    # pass
-
+    
 
 def createButton( flag):
     return Button(root, text="", height = 7, width =18, command=lambda:buttonClick(flag))
 
+def checkDraw():
+    for item in buttonList:
+        if (item['state'] == DISABLED):  
+            return 1
+        else:
+            return 0
+            break
 
 #    Nine buttons
 b1 = createButton(1)  # Parameters -> flag
@@ -51,5 +61,5 @@ b9.grid(row = 2, column = 2, padx =5, pady =5)
 
 
 #   Adjust Buttons to list
-
+#   Check draw
 root.mainloop()
