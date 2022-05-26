@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 root = Tk()
 root.title("Tic-Tac-Toe")
@@ -25,20 +26,26 @@ def buttonClick(buttonVal):
         buttonList[buttonVal-1].config(text = "O")
         oList.append(buttonVal)
         if checkWin(oList):
-            print("O is winner")
+            highlightWin()
+            showWinner("O is winner")
     else:
         buttonList[buttonVal-1].config(text = "X")
         xList.append(buttonVal)
         if checkWin(xList):
-            print("X is winner")
+            highlightWin()
+            showWinner("X is winner")
 
 def checkWin(parentList):
     for item in ticTakWin:
-        return set(item).issubset(set(parentList))
+        if (set(item).issubset(set(parentList))):
+            global toHighlightItem;
+            toHighlightItem = item;
+            return 1
         
-
-    
-    
+def highlightWin():
+    for item in toHighlightItem:
+        buttonList[item-1].config(bg = 'green')
+    print(str(toHighlightItem))
 
 def createButton( flag):
     return Button(root, text="", height = 7, width =18, command=lambda:buttonClick(flag))
@@ -51,7 +58,11 @@ def checkDraw():
             return 0
             break
 
-#    Nine buttons
+def showWinner(text):
+    messagebox.showinfo("Information",text)
+    
+
+#    Creating buttons
 b1 = createButton(1)  # Parameters -> flag
 b2 = createButton(2)
 b3 = createButton(3)
@@ -62,8 +73,10 @@ b7 = createButton(7)
 b8 = createButton(8)
 b9 = createButton(9)
 
+#   Adding all buttons to a list
 buttonList += [b1, b2, b3, b4, b5, b6, b7, b8, b9]
 
+#   Griding buttons
 b1.grid(row = 0, column = 0, padx =5, pady =5)
 b2.grid(row = 0, column = 1, padx =5, pady =5)
 b3.grid(row = 0, column = 2, padx =5, pady =5)
@@ -74,9 +87,4 @@ b7.grid(row = 2, column = 0, padx =5, pady =5)
 b8.grid(row = 2, column = 1, padx =5, pady =5)
 b9.grid(row = 2, column = 2, padx =5, pady =5)
 
-
-
-
-#   Adjust Buttons to list
-#   Check draw
 root.mainloop()
