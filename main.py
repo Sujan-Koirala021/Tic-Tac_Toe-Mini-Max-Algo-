@@ -5,6 +5,11 @@ root.title("Tic-Tac-Toe")
 root.geometry('440x390')
 state = 0
 buttonList = []
+oList = []
+xList = []
+ticTakWin = [[1, 2, 3], [4, 5, 6], [7, 8, 9], 
+        [1, 4, 7], [2, 5, 8], [3, 6, 9],
+        [1, 5, 9], [3, 5, 7] ]  #   Wining posture (Child list)
 #   Make window unresizable
 root.resizable(False, False)
 
@@ -16,11 +21,23 @@ def buttonClick(buttonVal):
     state += 1
     
     # Check for alternate X and O
-    if (state % 2 == 0):
+    if (state % 2 != 0):
         buttonList[buttonVal-1].config(text = "O")
+        oList.append(buttonVal)
+        if checkWin(oList):
+            print("O is winner")
     else:
         buttonList[buttonVal-1].config(text = "X")
+        xList.append(buttonVal)
+        if checkWin(xList):
+            print("X is winner")
+
+def checkWin(parentList):
+    for item in ticTakWin:
+        return set(item).issubset(set(parentList))
         
+
+    
     
 
 def createButton( flag):
