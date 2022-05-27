@@ -9,7 +9,8 @@ The player who succeeds in placing three of their marks in a horizontal, vertica
 
 ## Demo
 
-![20220527_190205](https://user-images.githubusercontent.com/84112374/170708560-31435104-e329-485c-9c4d-256c25bdce39.gif)
+![20220527_191818](https://user-images.githubusercontent.com/84112374/170709827-770e5ccd-ee6c-4372-8b1e-3c3c68039ac7.gif)
+
 
 
 
