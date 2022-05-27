@@ -1,4 +1,5 @@
 # Tic Tac Toe
+# March 27, 2022
 
 from tkinter import *
 from tkinter import messagebox
@@ -6,14 +7,16 @@ from tkinter import messagebox
 
 root = Tk()
 root.title("Tic-Tac-Toe")
-root.geometry('440x390')
+root.geometry('495x440')
 state = 0
 buttonList = []
 oList = []
 xList = []
+
+#   Winning posture (Child list)
 ticTakWin = [[1, 2, 3], [4, 5, 6], [7, 8, 9], 
         [1, 4, 7], [2, 5, 8], [3, 6, 9],
-        [1, 5, 9], [3, 5, 7] ]  #   Wining posture (Child list)
+        [1, 5, 9], [3, 5, 7] ]  
 #   Make window unresizable
 root.resizable(False, False)
 
@@ -55,10 +58,10 @@ def checkWin(parentList):
         
 def highlightWin():
     for item in toHighlightItem:
-        buttonList[item-1].config(bg = '#71C562')
+        buttonList[item-1].config(bg = '#013220')
 
 def createButton( flag):
-    return Button(root, text="",fg = '#9efd38', height = 7, width =18, command=lambda:buttonClick(flag))
+    return Button(root, text="",font = ('Helvetica', 23), bg = '#121212', fg = 'white', height = 3, width =8, command=lambda:buttonClick(flag))
 
 #   Check for draw
 def checkDraw():
@@ -75,6 +78,7 @@ def numbAllButtons():
         item['state'] = DISABLED
         pass
 
+#   Show information as message box
 def showInformation(text):
     messagebox.showinfo("GAME OVER",text)
     
