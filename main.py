@@ -1,3 +1,5 @@
+# Tic Tac Toe
+
 from tkinter import *
 from tkinter import messagebox
 
@@ -29,6 +31,7 @@ def buttonClick(buttonVal):
         if checkWin(oList):
             highlightWin()
             showInformation("O is winner")
+            numbAllButtons()
             return
     else:
         buttonList[buttonVal-1].config(text = "X")
@@ -36,27 +39,28 @@ def buttonClick(buttonVal):
         if checkWin(xList):
             highlightWin()
             showInformation("X is winner")
+            numbAllButtons()
             return
             
     if (state == 9):
         showInformation("Draw")
 
-
+#   Check winning condition 
 def checkWin(parentList):
     for item in ticTakWin:
         if (set(item).issubset(set(parentList))):
             global toHighlightItem;
-            toHighlightItem = item;
+            toHighlightItem = item;     #   List of buttons to be highlighted
             return 1
         
 def highlightWin():
     for item in toHighlightItem:
         buttonList[item-1].config(bg = '#71C562')
-    print(str(toHighlightItem))
 
 def createButton( flag):
     return Button(root, text="",fg = '#9efd38', height = 7, width =18, command=lambda:buttonClick(flag))
 
+#   Check for draw
 def checkDraw():
     for item in buttonList:
         if (item['state'] == DISABLED):  
@@ -65,8 +69,14 @@ def checkDraw():
             return 0
             break
 
+#   Numb button after gameover
+def numbAllButtons():
+    for item in buttonList:
+        item['state'] = DISABLED
+        pass
+
 def showInformation(text):
-    messagebox.showinfo("Information",text)
+    messagebox.showinfo("GAME OVER",text)
     
 
 #    Creating buttons
