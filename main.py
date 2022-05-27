@@ -8,6 +8,7 @@ from tkinter import messagebox
 root = Tk()
 root.title("Tic-Tac-Toe")
 root.geometry('495x440')
+root.iconbitmap('appIcon.ico')
 state = 0
 buttonList = []
 oList = []
