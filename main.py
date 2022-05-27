@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 
+
 root = Tk()
 root.title("Tic-Tac-Toe")
 root.geometry('440x390')
@@ -27,13 +28,19 @@ def buttonClick(buttonVal):
         oList.append(buttonVal)
         if checkWin(oList):
             highlightWin()
-            showWinner("O is winner")
+            showInformation("O is winner")
+            return
     else:
         buttonList[buttonVal-1].config(text = "X")
         xList.append(buttonVal)
         if checkWin(xList):
             highlightWin()
-            showWinner("X is winner")
+            showInformation("X is winner")
+            return
+            
+    if (state == 9):
+        showInformation("Draw")
+
 
 def checkWin(parentList):
     for item in ticTakWin:
@@ -44,11 +51,11 @@ def checkWin(parentList):
         
 def highlightWin():
     for item in toHighlightItem:
-        buttonList[item-1].config(bg = 'green')
+        buttonList[item-1].config(bg = '#71C562')
     print(str(toHighlightItem))
 
 def createButton( flag):
-    return Button(root, text="", height = 7, width =18, command=lambda:buttonClick(flag))
+    return Button(root, text="",fg = '#9efd38', height = 7, width =18, command=lambda:buttonClick(flag))
 
 def checkDraw():
     for item in buttonList:
@@ -58,7 +65,7 @@ def checkDraw():
             return 0
             break
 
-def showWinner(text):
+def showInformation(text):
     messagebox.showinfo("Information",text)
     
 
