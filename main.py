@@ -3,6 +3,7 @@
 
 from tkinter import *
 from tkinter import messagebox
+import random, time
 
 
 root = Tk()
@@ -13,6 +14,7 @@ state = 0
 buttonList = []
 oList = []
 xList = []
+
 
 #   Winning posture (Child list)
 ticTakWin = [[1, 2, 3], [4, 5, 6], [7, 8, 9], 
@@ -25,26 +27,31 @@ def buttonClick(buttonVal):
     # Disable button after click
     buttonList[buttonVal-1].config(state = DISABLED)
     
-    global state
-    state += 1
+    # global state
+    # state += 1
     
-    # Check for alternate X and O
-    if (state % 2 != 0):
-        buttonList[buttonVal-1].config(text = "O")
-        oList.append(buttonVal)
-        if checkWin(oList):
-            highlightWin()
-            showInformation("O is winner")
-            numbAllButtons()
-            return
-    else:
-        buttonList[buttonVal-1].config(text = "X")
-        xList.append(buttonVal)
-        if checkWin(xList):
-            highlightWin()
-            showInformation("X is winner")
-            numbAllButtons()
-            return
+    #   User's turn
+    buttonList[buttonVal-1].config(text = "O")
+    oList.append(buttonVal)
+    if checkWin(oList):
+        highlightWin()
+        showInformation("O is winner")
+        numbAllButtons()
+        return
+
+    
+    #   Bot's turn
+    availList = [item for item in [1, 2, 3, 4, 5, 6, 7, 8, 9] if (item not in  oList and item not in xList)]
+
+    buttonVal = random.choice(availList)
+    
+    buttonList[buttonVal-1].config(text = "X")
+    xList.append(buttonVal)
+    if checkWin(xList):
+        highlightWin()
+        showInformation("X is winner")
+        numbAllButtons()
+        return
             
     if (state == 9):
         showInformation("Draw")
