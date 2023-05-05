@@ -54,27 +54,32 @@ class BotPlayer:
         
 
     def getBestMove(self):
-        bestMove = 0    # might give issue
+        bestMove = 0    
         bestScore = -1000
-        count = 0
+        
+        #   X is the bot in this game 
+        #   In X(bot) turn we try to maximize the result
         
         for item in range(1,10):
             if item in self.availList:
-                self.addNewXPosition(item)  # as its X turn ie bot turn which we try to maximize
-                score = self.minimax(item, 0, False)
+                
+                #   Evaulate every available positions
+                self.addNewXPosition(item)  # as its X(bot) turn ,we try to maximize
+
+                score = self.minimax(item, 0, False) #  'False' recursive call to next turn where bot(X) minimizes result to return score
                 
                 self.removeNewXPosition(item)
+                
                 if (score>bestScore):
                     bestScore = score
                     bestMove = item
-                    count += 1
                 
         return bestMove
         
     #   Recursive function used for tree implementation
     def minimax(self,pos,depth, isMaximizing):
         
-        #   Issue in these checkwin
+        #   Termination condition(game lost or won or draw) for recursive call
         if self.isWin(self.xList):
             return 1
         
@@ -86,14 +91,14 @@ class BotPlayer:
         
         
         
-        
         if isMaximizing:
+            #   Find high score
             bestScore = -1000
             
             for item in range(1,10):
                 if item in self.availList:
                     self.addNewXPosition(item)
-                    score = self.minimax(item,depth+1, False)
+                    score = self.minimax(item,depth+1, False)   # in next turn, we minimize as it is O's turn
                     self.removeNewXPosition(item)
                     bestScore = max(bestScore, score)
 
