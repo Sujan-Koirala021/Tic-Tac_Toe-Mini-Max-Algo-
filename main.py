@@ -3,6 +3,8 @@
 
 from tkinter import *
 from tkinter import messagebox
+from minimax import BotPlayer
+import random, time
 
 
 root = Tk()
@@ -13,6 +15,8 @@ state = 0
 buttonList = []
 oList = []
 xList = []
+availList = [1, 2, 3, 4, 5,6, 7 ,8 , 9]
+
 
 #   Winning posture (Child list)
 ticTakWin = [[1, 2, 3], [4, 5, 6], [7, 8, 9], 
@@ -23,31 +27,53 @@ root.resizable(False, False)
 
 def buttonClick(buttonVal):
     # Disable button after click
+    
     buttonList[buttonVal-1].config(state = DISABLED)
     
     global state
     state += 1
     
-    # Check for alternate X and O
-    if (state % 2 != 0):
-        buttonList[buttonVal-1].config(text = "O")
-        oList.append(buttonVal)
-        if checkWin(oList):
-            highlightWin()
-            showInformation("O is winner")
-            numbAllButtons()
-            return
-    else:
-        buttonList[buttonVal-1].config(text = "X")
-        xList.append(buttonVal)
-        if checkWin(xList):
-            highlightWin()
-            showInformation("X is winner")
-            numbAllButtons()
-            return
-            
-    if (state == 9):
+    #   User's turn
+    buttonList[buttonVal-1].config(text = "O")
+    oList.append(buttonVal)
+    availList.remove(buttonVal)
+    if checkWin(oList):
+        highlightWin()
+        showInformation("O is winner")
+        numbAllButtons()
+        return
+    
+    if checkDraw(availList):
         showInformation("Draw")
+        numbAllButtons()
+        return
+        
+    
+
+    
+    #   Bot's turn
+
+    bot = BotPlayer(availList, oList, xList)
+    buttonVal = bot.getBestMove()
+    
+    buttonList[buttonVal-1].config(text = "X")
+    buttonList[buttonVal-1].config(state = DISABLED)
+    state+=1
+    xList.append(buttonVal)
+    availList.remove(buttonVal)
+    
+    if checkWin(xList):
+        highlightWin()
+        showInformation("X is winner")
+        numbAllButtons()
+        return
+
+    
+    if checkDraw(availList):
+        if len(availList) == 0:
+            showInformation("Draw")
+            numbAllButtons()
+            return
 
 #   Check winning condition 
 def checkWin(parentList):
@@ -65,13 +91,9 @@ def createButton( flag):
     return Button(root, text="",font = ('Helvetica', 23), bg = '#121212', fg = 'white', height = 3, width =8, command=lambda:buttonClick(flag))
 
 #   Check for draw
-def checkDraw():
-    for item in buttonList:
-        if (item['state'] == DISABLED):  
+def checkDraw(availList):
+    if (len(availList) == 0):
             return 1
-        else:
-            return 0
-            break
 
 #   Numb button after gameover
 def numbAllButtons():
@@ -83,6 +105,7 @@ def numbAllButtons():
 def showInformation(text):
     messagebox.showinfo("GAME OVER",text)
     
+
 
 #    Creating buttons
 b1 = createButton(1)  # Parameters -> flag
