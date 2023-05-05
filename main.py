@@ -15,6 +15,7 @@ state = 0
 buttonList = []
 oList = []
 xList = []
+availList = [1, 2, 3, 4, 5,6, 7 ,8 , 9]
 
 
 #   Winning posture (Child list)
@@ -35,7 +36,7 @@ def buttonClick(buttonVal):
     #   User's turn
     buttonList[buttonVal-1].config(text = "O")
     oList.append(buttonVal)
-    availList = [item for item in [1, 2, 3, 4, 5, 6, 7, 8, 9] if (item not in  oList and item not in xList)]
+    availList.remove(buttonVal)
     if checkWin(oList):
         highlightWin()
         showInformation("O is winner")
@@ -51,7 +52,6 @@ def buttonClick(buttonVal):
 
     
     #   Bot's turn
-    availList = [item for item in [1, 2, 3, 4, 5, 6, 7, 8, 9] if (item not in  oList and item not in xList)]
 
     bot = BotPlayer(availList, oList, xList)
     buttonVal = bot.getBestMove()
@@ -60,6 +60,8 @@ def buttonClick(buttonVal):
     buttonList[buttonVal-1].config(state = DISABLED)
     state+=1
     xList.append(buttonVal)
+    availList.remove(buttonVal)
+    
     if checkWin(xList):
         highlightWin()
         showInformation("X is winner")

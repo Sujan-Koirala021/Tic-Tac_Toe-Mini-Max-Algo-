@@ -58,18 +58,17 @@ class BotPlayer:
         bestScore = -1000
         count = 0
         
-        for item in self.availList:
-            self.addNewXPosition(item)  # as its X turn ie bot turn which we try to maximize
-            print(self.xList)
-            score = self.minimax(item, 0, False)
-            print(f"Score : {score}")          
-            
-            self.removeNewXPosition(item)
-            count += 1
-            if (score>bestScore):
-                bestScore = score
-                bestMove = item
-        print(f"BEst move is {bestMove}")
+        for item in range(1,10):
+            if item in self.availList:
+                self.addNewXPosition(item)  # as its X turn ie bot turn which we try to maximize
+                score = self.minimax(item, 0, False)
+                
+                self.removeNewXPosition(item)
+                if (score>bestScore):
+                    bestScore = score
+                    bestMove = item
+                    count += 1
+                
         return bestMove
         
     #   Recursive function used for tree implementation
